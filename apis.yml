@@ -1,0 +1,99 @@
+aid: nuclino
+name: Nuclino
+description: >-
+  Nuclino is a unified team workspace that combines wikis, docs, and project
+  management into one collaborative platform. Its REST API enables developers
+  to build integrations and automate tasks by programmatically managing items,
+  collections, workspaces, teams, users, fields, and files using Markdown
+  content. The API covers the full content lifecycle — create, read, update,
+  delete, and search — making it possible to sync knowledge bases with external
+  systems, trigger content updates from CI/CD pipelines, and build custom
+  tooling on top of team documentation.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/nuclino/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Knowledge Management
+  - Team Workspace
+  - Documentation
+  - Wiki
+  - Collaboration
+  - Project Management
+  - REST API
+apis:
+  - aid: nuclino:nuclino-api
+    name: Nuclino API
+    description: >-
+      REST API for the Nuclino unified team workspace. Provides programmatic
+      access to items (wiki pages), collections (page groups), workspaces,
+      teams, users, fields, and files. All content is authored and returned in
+      Markdown. Supports full CRUD on items and collections, full-text search,
+      cursor-based pagination, and file download.
+    humanURL: https://www.nuclino.com/api
+    baseURL: https://api.nuclino.com/v0
+    tags:
+      - Items
+      - Collections
+      - Workspaces
+      - Users
+      - Teams
+      - Fields
+      - Files
+      - Search
+      - Markdown
+    properties:
+      - type: Documentation
+        url: https://help.nuclino.com/d3a29686-api
+      - type: Authentication
+        url: https://help.nuclino.com/8090bb76-authentication
+      - type: RateLimits
+        url: https://help.nuclino.com/b147124e-rate-limiting
+      - type: ResourcesEndpoints
+        url: https://help.nuclino.com/e30a68b1-resources-endpoints
+      - type: ItemsCollections
+        url: https://help.nuclino.com/fa38d15f-items-and-collections
+      - type: Users
+        url: https://help.nuclino.com/f76dc920-users
+      - type: Workspaces
+        url: https://help.nuclino.com/702467a8-workspaces
+      - type: ResponseFormat
+        url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+      - type: Blog
+        url: https://blog.nuclino.com/
+      - type: Plans
+        url: plans/nuclino-plans-pricing.yml
+      - type: RateLimits
+        url: rate-limits/nuclino-rate-limits.yml
+      - type: FinOps
+        url: finops/nuclino-finops.yml
+common:
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: Pricing
+    url: https://www.nuclino.com/pricing
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: SignUp
+    url: https://app.nuclino.com/signup
+  - type: Login
+    url: https://app.nuclino.com/login
+  - type: APIKeys
+    url: https://help.nuclino.com/04598850-manage-api-keys
+  - type: MCP
+    url: https://help.nuclino.com/70af7f4f-connect-nuclino-to-ai-assistants-with-mcp
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

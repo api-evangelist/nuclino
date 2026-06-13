@@ -1,0 +1,72 @@
+name: Nuclino FinOps
+description: >-
+  Financial operations guidance for teams using Nuclino and its REST API.
+  Nuclino uses per-seat pricing with three tiers. API usage itself does not
+  carry additional cost beyond the underlying plan subscription. Cost
+  optimization focuses on right-sizing seat counts and choosing the correct
+  plan tier for required features.
+url: https://www.nuclino.com/pricing
+created: '2026-06-13'
+modified: '2026-06-13'
+costModel:
+  type: per-seat
+  description: >-
+    Nuclino charges per user per month. There are no metered API call fees,
+    overage charges per request, or storage add-on purchases. Total cost is
+    seats multiplied by the plan monthly rate.
+  currency: USD
+  billingCycles:
+    - monthly
+    - annual
+  annualDiscount: 25%
+pricing:
+  free:
+    pricePerUser: 0
+    itemLimit: 50
+    storageTotal: 2 GB
+    apiAccess: true
+  starter:
+    pricePerUserMonthly: 6.00
+    pricePerUserAnnual: 4.50
+    storagePerUser: 10 GB
+    versionHistory: 30 days
+    apiAccess: true
+  business:
+    pricePerUserMonthly: 10.00
+    pricePerUserAnnual: 7.50
+    storagePerUser: 10 GB
+    versionHistory: unlimited
+    apiAccess: true
+    aiSidekick: true
+    auditLog: true
+costOptimization:
+  - strategy: Annual billing discount
+    description: >-
+      Switch from monthly to annual billing to save 25% on all paid plans.
+      Starter drops from $6 to ~$4.50/user/month and Business from $10 to
+      ~$7.50/user/month.
+  - strategy: Right-size seat count
+    description: >-
+      Audit active users regularly. Deactivate accounts for departed team
+      members promptly since billing is per active seat.
+  - strategy: Start on Free for small teams
+    description: >-
+      Teams under the 50-item threshold can use the Free plan indefinitely,
+      including full REST API access, with zero cost.
+  - strategy: Choose Starter unless AI or audit is required
+    description: >-
+      Most API use cases (content sync, automation, search) are fully covered
+      by the Starter plan at $6/user/month. Upgrade to Business only when
+      Sidekick AI, audit log, or advanced security is needed.
+  - strategy: Avoid redundant storage purchases
+    description: >-
+      Storage is included per user (10 GB on paid plans). There are no
+      separate storage add-ons; large file volumes should be hosted externally
+      and referenced via links in Nuclino.
+apiCostNotes:
+  - The REST API has no per-request fees on any plan.
+  - API key generation is available to all users including Free plan members.
+  - Rate limits (150 requests/minute) are uniform across plans; there is no
+    higher rate limit tier available for purchase.
+  - Webhooks are not available; polling-based integrations should be designed
+    to stay within rate limits to avoid unexpected 429 responses.
