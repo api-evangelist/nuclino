@@ -1,0 +1,96 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "nuclino": "https://help.nuclino.com/api#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Item": "nuclino:Item",
+    "Collection": "nuclino:Collection",
+    "Workspace": "nuclino:Workspace",
+    "Team": "nuclino:Team",
+    "User": "nuclino:User",
+    "Field": "nuclino:Field",
+    "File": "nuclino:File",
+
+    "id": "@id",
+    "object": "@type",
+
+    "title": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "schema:text",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "lastUpdatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "createdUserId": {
+      "@id": "nuclino:createdBy",
+      "@type": "@id"
+    },
+    "lastUpdatedUserId": {
+      "@id": "nuclino:lastUpdatedBy",
+      "@type": "@id"
+    },
+    "workspaceId": {
+      "@id": "nuclino:inWorkspace",
+      "@type": "@id"
+    },
+    "teamId": {
+      "@id": "nuclino:inTeam",
+      "@type": "@id"
+    },
+    "childIds": {
+      "@id": "nuclino:hasChild",
+      "@type": "@id",
+      "@container": "@list"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "avatarUrl": {
+      "@id": "schema:image",
+      "@type": "@id"
+    },
+    "fields": {
+      "@id": "nuclino:hasField",
+      "@container": "@set"
+    },
+    "fileName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "download": {
+      "@id": "nuclino:downloadInfo"
+    },
+    "highlight": {
+      "@id": "nuclino:searchHighlight",
+      "@type": "xsd:string"
+    }
+  }
+}

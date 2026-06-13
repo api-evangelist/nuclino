@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuclino/main/json-schema/item.json",
+  "title": "Nuclino Item",
+  "description": "A Nuclino item (wiki page) or collection (page group). Items contain Markdown content; collections group items hierarchically.",
+  "type": "object",
+  "required": ["object", "id"],
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": ["item", "collection"],
+      "description": "Distinguishes between a wiki page (item) and a folder/group (collection)"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the item or collection"
+    },
+    "workspaceId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the workspace the item belongs to"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Direct URL to view the item in the Nuclino application"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the item or collection"
+    },
+    "content": {
+      "type": "string",
+      "description": "Body text in Markdown format. Only returned when retrieving a single item (not in list responses)."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the item was created"
+    },
+    "createdUserId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user who created the item"
+    },
+    "lastUpdatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the item was last modified"
+    },
+    "lastUpdatedUserId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user who last modified the item"
+    },
+    "childIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "description": "Ordered list of child item/collection IDs (present on collections)"
+    },
+    "highlight": {
+      "type": "string",
+      "description": "Snippet of text showing the search query match context. Only present in search results."
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "object": "item",
+      "id": "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+      "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "url": "https://app.nuclino.com/t/i/3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+      "title": "Getting Started",
+      "content": "# Getting Started\n\nWelcome to Nuclino!",
+      "createdAt": "2024-01-15T10:00:00.000Z",
+      "createdUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "lastUpdatedAt": "2024-03-20T14:30:00.000Z",
+      "lastUpdatedUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "vocabulary": "Nuclino API",
+  "version": "v0",
+  "source": "https://help.nuclino.com/d3a29686-api",
+  "terms": [
+    {
+      "term": "item",
+      "definition": "A wiki page or document within a Nuclino workspace. Items contain a title and Markdown body content, and are the primary unit of knowledge in Nuclino.",
+      "type": "resource"
+    },
+    {
+      "term": "collection",
+      "definition": "A folder or group that organizes items hierarchically within a workspace. Collections can contain items and other collections. Collections may also carry Markdown content.",
+      "type": "resource"
+    },
+    {
+      "term": "workspace",
+      "definition": "A named container belonging to a team that holds a hierarchy of items and collections. Workspaces can have custom fields that apply to all items within them.",
+      "type": "resource"
+    },
+    {
+      "term": "team",
+      "definition": "The top-level organizational unit in Nuclino. A team owns one or more workspaces and manages member access.",
+      "type": "resource"
+    },
+    {
+      "term": "user",
+      "definition": "A Nuclino account holder. Each API key is associated with a user and inherits that user's permissions.",
+      "type": "resource"
+    },
+    {
+      "term": "field",
+      "definition": "A custom metadata attribute defined on a workspace that can be applied to items. Fields have a name and a type (e.g. text, number, date, select).",
+      "type": "resource"
+    },
+    {
+      "term": "file",
+      "definition": "A binary attachment uploaded to and stored within Nuclino. Files are associated with a specific item and can be retrieved via a temporary download URL.",
+      "type": "resource"
+    },
+    {
+      "term": "content",
+      "definition": "The body text of an item or collection, authored and stored in Markdown format. The content field is only returned when retrieving a single item, not in list responses.",
+      "type": "property"
+    },
+    {
+      "term": "childIds",
+      "definition": "An ordered array of UUIDs referencing the direct children (items or collections) of a collection or workspace. Represents the hierarchical structure of content.",
+      "type": "property"
+    },
+    {
+      "term": "highlight",
+      "definition": "A snippet of text from an item's content that shows the context of a full-text search match. Only present on items returned from a search request.",
+      "type": "property"
+    },
+    {
+      "term": "cursor-based pagination",
+      "definition": "The pagination model used by the Nuclino API list endpoints. Use the `after` query parameter with the UUID of the last item in a page to retrieve the next page.",
+      "type": "concept"
+    },
+    {
+      "term": "API key",
+      "definition": "A secret credential passed in the Authorization HTTP header to authenticate API requests. Each key carries the permissions of its associated user account.",
+      "type": "concept"
+    },
+    {
+      "term": "rate limit",
+      "definition": "The maximum number of API requests allowed per API key per minute. Nuclino allows up to 150 requests per minute. Exceeding this limit returns HTTP 429.",
+      "type": "concept"
+    },
+    {
+      "term": "trash",
+      "definition": "The soft-delete destination for items and collections removed via the DELETE endpoint. Deleted items are moved to the trash rather than immediately destroyed.",
+      "type": "concept"
+    },
+    {
+      "term": "MCP",
+      "definition": "Model Context Protocol — an integration standard that allows AI assistants to connect to Nuclino and read/write content programmatically. Nuclino provides a native MCP server.",
+      "type": "concept"
+    }
+  ]
+}

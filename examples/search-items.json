@@ -1,0 +1,33 @@
+{
+  "description": "Search for items and collections by keyword within a team",
+  "request": {
+    "method": "GET",
+    "url": "https://api.nuclino.com/v0/items?teamId=t1b2c3d4-e5f6-7890-abcd-ef1234567890&search=deployment&limit=10",
+    "headers": {
+      "Authorization": "YOUR_API_KEY"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "success",
+      "data": {
+        "object": "list",
+        "items": [
+          {
+            "object": "item",
+            "id": "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+            "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "url": "https://app.nuclino.com/t/i/3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+            "title": "Deployment Runbook",
+            "createdAt": "2026-06-13T09:00:00.000Z",
+            "createdUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "lastUpdatedAt": "2026-06-13T09:00:00.000Z",
+            "lastUpdatedUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "highlight": "…run smoke tests before each **deployment** to production…"
+          }
+        ]
+      }
+    }
+  }
+}

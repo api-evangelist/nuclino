@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuclino/main/json-schema/user.json",
+  "title": "Nuclino User",
+  "description": "A Nuclino user account.",
+  "type": "object",
+  "required": ["object", "id", "firstName", "lastName", "email"],
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": ["user"],
+      "description": "Object type identifier"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the user"
+    },
+    "firstName": {
+      "type": "string",
+      "description": "User's first name"
+    },
+    "lastName": {
+      "type": "string",
+      "description": "User's last name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address"
+    },
+    "avatarUrl": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "URL to the user's profile avatar image. May be null if not set."
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "object": "user",
+      "id": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "avatarUrl": "https://cdn.nuclino.com/avatars/jane.png"
+    }
+  ]
+}

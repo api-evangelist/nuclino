@@ -69,6 +69,8 @@ apis:
         url: rate-limits/nuclino-rate-limits.yml
       - type: FinOps
         url: finops/nuclino-finops.yml
+      - type: OpenAPI
+        url: openapi/nuclino-openapi.json
 common:
   - type: Documentation
     url: https://help.nuclino.com/d3a29686-api

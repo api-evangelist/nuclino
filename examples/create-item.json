@@ -1,0 +1,35 @@
+{
+  "description": "Create a new item (wiki page) in a workspace",
+  "request": {
+    "method": "POST",
+    "url": "https://api.nuclino.com/v0/items",
+    "headers": {
+      "Authorization": "YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "object": "item",
+      "title": "Deployment Runbook",
+      "content": "# Deployment Runbook\n\n## Prerequisites\n\n- Docker installed\n- Access to production environment\n\n## Steps\n\n1. Pull latest image\n2. Run smoke tests\n3. Deploy to production\n"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "success",
+      "data": {
+        "object": "item",
+        "id": "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+        "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "url": "https://app.nuclino.com/t/i/3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+        "title": "Deployment Runbook",
+        "content": "# Deployment Runbook\n\n## Prerequisites\n\n- Docker installed\n- Access to production environment\n\n## Steps\n\n1. Pull latest image\n2. Run smoke tests\n3. Deploy to production\n",
+        "createdAt": "2026-06-13T09:00:00.000Z",
+        "createdUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "lastUpdatedAt": "2026-06-13T09:00:00.000Z",
+        "lastUpdatedUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890"
+      }
+    }
+  }
+}

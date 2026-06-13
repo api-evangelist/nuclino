@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuclino/main/json-schema/team.json",
+  "title": "Nuclino Team",
+  "description": "A Nuclino team — the top-level organizational unit that owns workspaces and manages members.",
+  "type": "object",
+  "required": ["object", "id", "name"],
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": ["team"],
+      "description": "Object type identifier"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the team"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the team"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "object": "team",
+      "id": "t1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Acme Corp"
+    }
+  ]
+}

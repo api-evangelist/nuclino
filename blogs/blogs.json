@@ -1,0 +1,56 @@
+{
+  "url": "https://blog.nuclino.com/",
+  "fetched": "2026-06-13",
+  "posts": [
+    {
+      "title": "New in Nuclino: More languages, better sorting, 2FA enforcement, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-more-languages-better-sorting-2fa-enforcement-and-more",
+      "date": "2026-04-30"
+    },
+    {
+      "title": "New in Nuclino: MCP Server for AI assistants and Canvas improvements",
+      "url": "https://blog.nuclino.com/new-in-nuclino-mcp-server-for-ai-assistants-and-canvas-improvements",
+      "date": "2026-01-30"
+    },
+    {
+      "title": "New in Nuclino: Images in board view, faster search, smarter Sidekick, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-images-in-board-view-faster-search-smarter-sidekick-and-more",
+      "date": "2025-10-31"
+    },
+    {
+      "title": "New in Nuclino: Custom templates, Matterport embeds, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-custom-templates-matterport-embeds-and-more",
+      "date": "2025-07-31"
+    },
+    {
+      "title": "New in Nuclino: Content in collections, field colors, workspace sorting, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-content-in-collections-field-colors-workspace-sorting-and-more",
+      "date": "2025-04-28"
+    },
+    {
+      "title": "New in Nuclino: Canvas improvements and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-canvas-improvements-and-more",
+      "date": "2025-02-18"
+    },
+    {
+      "title": "New in Nuclino: Bulk actions, improved navigation, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-bulk-actions-improved-navigation-and-more",
+      "date": "2024-12-09"
+    },
+    {
+      "title": "Introducing workspace publishing!",
+      "url": "https://blog.nuclino.com/introducing-workspace-publishing",
+      "date": "2024-11-04"
+    },
+    {
+      "title": "New in Nuclino: Improved version history, desktop app upgrade, and more",
+      "url": "https://blog.nuclino.com/new-in-nuclino-improved-version-history-desktop-app-upgrade-and-more",
+      "date": "2024-10-01"
+    },
+    {
+      "title": "Introducing Ask Sidekick!",
+      "url": "https://blog.nuclino.com/introducing-ask-sidekick",
+      "date": "2024-07-31"
+    }
+  ]
+}

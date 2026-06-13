@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuclino/main/json-schema/workspace.json",
+  "title": "Nuclino Workspace",
+  "description": "A Nuclino workspace — a named container belonging to a team that holds a hierarchy of items and collections.",
+  "type": "object",
+  "required": ["object", "id", "teamId", "name"],
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": ["workspace"],
+      "description": "Object type identifier"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the workspace"
+    },
+    "teamId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the team that owns this workspace"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the workspace"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the workspace was created"
+    },
+    "createdUserId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user who created the workspace"
+    },
+    "fields": {
+      "type": "array",
+      "description": "Custom fields defined for items in this workspace",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier of the field"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the field"
+          },
+          "type": {
+            "type": "string",
+            "description": "Data type of the field (e.g. text, number, date, select)"
+          }
+        }
+      }
+    },
+    "childIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "description": "Ordered list of top-level item and collection IDs in this workspace"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "object": "workspace",
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "teamId": "t1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Engineering",
+      "createdAt": "2023-06-01T08:00:00.000Z",
+      "createdUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "fields": [],
+      "childIds": [
+        "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d"
+      ]
+    }
+  ]
+}
