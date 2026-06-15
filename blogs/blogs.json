@@ -1,6 +1,6 @@
 {
   "url": "https://blog.nuclino.com/",
-  "fetched": "2026-06-13",
+  "fetched": "2026-06-14T20:42:17Z",
   "posts": [
     {
       "title": "New in Nuclino: More languages, better sorting, 2FA enforcement, and more",
@@ -52,5 +52,23 @@
       "url": "https://blog.nuclino.com/introducing-ask-sidekick",
       "date": "2024-07-31"
     }
-  ]
+  ],
+  "repo": "nuclino",
+  "feeds": [
+    {
+      "source": "https://help.nuclino.com/0a1bea6c-response-format-and-errors",
+      "feed_url": "https://help.nuclino.com/0a1bea6c-response-format-and-errors",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.nuclino.com/pricing",
+      "feed_url": "https://www.nuclino.com/pricing",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0
 }
