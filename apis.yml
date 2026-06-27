@@ -82,7 +82,7 @@ common:
     url: https://www.nuclino.com/pricing
   - type: Blog
     url: https://blog.nuclino.com/
-  - type: SignUp
+  - type: Signup
     url: https://app.nuclino.com/signup
   - type: Login
     url: https://app.nuclino.com/login
