@@ -72,6 +72,12 @@ apis:
       - type: OpenAPI
         url: openapi/nuclino-openapi.json
 common:
+  - type: TrustCenter
+    url: security/nuclino-trust-center.yml
+  - type: DomainSecurity
+    url: security/nuclino-domain-security.yml
+  - type: Authentication
+    url: authentication/nuclino-authentication.yml
   - type: Documentation
     url: https://help.nuclino.com/d3a29686-api
   - type: Authentication
