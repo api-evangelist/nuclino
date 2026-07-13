@@ -2,13 +2,21 @@
   "repo": "nuclino",
   "feeds": [
     {
-      "source": "https://blog.nuclino.com/",
-      "feed_url": "",
+      "source": "https://help.nuclino.com/0a1bea6c-response-format-and-errors",
+      "feed_url": "https://help.nuclino.com/0a1bea6c-response-format-and-errors",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
+    },
+    {
+      "source": "https://www.nuclino.com/pricing",
+      "feed_url": "https://www.nuclino.com/pricing",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-27T12:57:30Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "post_count": 0,
-  "agent_pulled": "2026-06-27"
+  "agent_pulled": "2026-07-04"
 }
