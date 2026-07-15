@@ -72,6 +72,8 @@ apis:
       - type: OpenAPI
         url: openapi/nuclino-openapi.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/nuclino-agentic-access.yml
   - type: TrustCenter
     url: security/nuclino-trust-center.yml
   - type: DomainSecurity
