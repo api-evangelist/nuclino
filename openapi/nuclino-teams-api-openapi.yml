@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: Nuclino Collections Teams API
+  description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
+  version: v0
+  contact:
+    name: Nuclino Support
+    url: https://help.nuclino.com/d3a29686-api
+  license:
+    name: Proprietary
+servers:
+- url: https://api.nuclino.com/v0
+  description: Nuclino API v0
+security:
+- ApiKeyAuth: []
+tags:
+- name: Teams
+  description: Team management
+paths:
+  /teams:
+    get:
+      summary: List teams
+      description: Returns the teams accessible to the authenticated API key.
+      operationId: listTeams
+      tags:
+      - Teams
+      responses:
+        '200':
+          description: A list of teams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamListResponse'
+              example:
+                status: success
+                data:
+                  object: list
+                  items:
+                  - object: team
+                    id: t1b2c3d4-e5f6-7890-abcd-ef1234567890
+                    name: Acme Corp
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /teams/{id}:
+    get:
+      summary: Retrieve team
+      description: Returns a single team by its UUID.
+      operationId: getTeam
+      tags:
+      - Teams
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the team
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: The requested team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Rate limit exceeded
+  schemas:
+    TeamResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Team'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    Team:
+      type: object
+      description: A Nuclino team
+      properties:
+        object:
+          type: string
+          enum:
+          - team
+          description: Object type identifier
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        name:
+          type: string
+          description: Name of the team
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
+    TeamListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key authentication. Pass your API key in the Authorization header.
+externalDocs:
+  description: Nuclino API Documentation
+  url: https://help.nuclino.com/d3a29686-api

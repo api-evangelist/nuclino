@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Nuclino Collections Files API
+  description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
+  version: v0
+  contact:
+    name: Nuclino Support
+    url: https://help.nuclino.com/d3a29686-api
+  license:
+    name: Proprietary
+servers:
+- url: https://api.nuclino.com/v0
+  description: Nuclino API v0
+security:
+- ApiKeyAuth: []
+tags:
+- name: Files
+  description: File management
+paths:
+  /files/{id}:
+    get:
+      summary: Retrieve file
+      description: Returns metadata and a temporary download URL for a file attachment.
+      operationId: getFile
+      tags:
+      - Files
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the file
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: File metadata and download URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Rate limit exceeded
+  schemas:
+    File:
+      type: object
+      description: A file attachment
+      properties:
+        object:
+          type: string
+          enum:
+          - file
+          description: Object type identifier
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        itemId:
+          type: string
+          format: uuid
+          description: ID of the item this file is attached to
+        fileName:
+          type: string
+          description: Original file name
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 creation timestamp
+        createdUserId:
+          type: string
+          format: uuid
+          description: ID of the user who uploaded the file
+        download:
+          type: object
+          description: Temporary download details
+          properties:
+            url:
+              type: string
+              format: uri
+              description: Temporary URL to download the file
+            expiresAt:
+              type: string
+              format: date-time
+              description: Expiry time of the download URL
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
+    FileResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/File'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key authentication. Pass your API key in the Authorization header.
+externalDocs:
+  description: Nuclino API Documentation
+  url: https://help.nuclino.com/d3a29686-api

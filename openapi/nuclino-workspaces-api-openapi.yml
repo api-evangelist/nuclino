@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: Nuclino Collections Workspaces API
+  description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
+  version: v0
+  contact:
+    name: Nuclino Support
+    url: https://help.nuclino.com/d3a29686-api
+  license:
+    name: Proprietary
+servers:
+- url: https://api.nuclino.com/v0
+  description: Nuclino API v0
+security:
+- ApiKeyAuth: []
+tags:
+- name: Workspaces
+  description: Workspace management
+paths:
+  /workspaces:
+    get:
+      summary: List workspaces
+      description: Returns a list of workspaces, optionally filtered by team. Supports cursor-based pagination.
+      operationId: listWorkspaces
+      tags:
+      - Workspaces
+      parameters:
+      - name: teamId
+        in: query
+        description: Filter workspaces by team UUID
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        description: Number of results to return (1-100)
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+      - name: after
+        in: query
+        description: Cursor UUID for pagination
+        required: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: A list of workspaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /workspaces/{id}:
+    get:
+      summary: Retrieve workspace
+      description: Returns a single workspace by its UUID.
+      operationId: getWorkspace
+      tags:
+      - Workspaces
+      parameters:
+      - name: id
+        in: path
+        description: UUID of the workspace
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: The requested workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Rate limit exceeded
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
+  schemas:
+    WorkspaceListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    Field:
+      type: object
+      description: A custom field defined on a workspace
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the field
+        name:
+          type: string
+          description: Name of the field
+        type:
+          type: string
+          description: Data type of the field
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
+    Workspace:
+      type: object
+      description: A Nuclino workspace
+      properties:
+        object:
+          type: string
+          enum:
+          - workspace
+          description: Object type identifier
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        teamId:
+          type: string
+          format: uuid
+          description: ID of the team that owns this workspace
+        name:
+          type: string
+          description: Name of the workspace
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 creation timestamp
+        createdUserId:
+          type: string
+          format: uuid
+          description: ID of the user who created the workspace
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+          description: Custom fields defined for this workspace
+        childIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of top-level child items and collections
+    WorkspaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Workspace'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API key authentication. Pass your API key in the Authorization header.
+externalDocs:
+  description: Nuclino API Documentation
+  url: https://help.nuclino.com/d3a29686-api
