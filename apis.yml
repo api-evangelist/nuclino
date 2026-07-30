@@ -10,7 +10,20 @@ description: >-
   systems, trigger content updates from CI/CD pipelines, and build custom
   tooling on top of team documentation.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nuclino.png
 url: https://raw.githubusercontent.com/api-evangelist/nuclino/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -24,53 +37,210 @@ tags:
   - Project Management
   - REST API
 apis:
-  - aid: nuclino:nuclino-api
-    name: Nuclino API
-    description: >-
-      REST API for the Nuclino unified team workspace. Provides programmatic
-      access to items (wiki pages), collections (page groups), workspaces,
-      teams, users, fields, and files. All content is authored and returned in
-      Markdown. Supports full CRUD on items and collections, full-text search,
-      cursor-based pagination, and file download.
-    humanURL: https://www.nuclino.com/api
-    baseURL: https://api.nuclino.com/v0
-    tags:
-      - Items
-      - Collections
-      - Workspaces
-      - Users
-      - Teams
-      - Fields
-      - Files
-      - Search
-      - Markdown
-    properties:
-      - type: Documentation
-        url: https://help.nuclino.com/d3a29686-api
-      - type: Authentication
-        url: https://help.nuclino.com/8090bb76-authentication
-      - type: RateLimits
-        url: https://help.nuclino.com/b147124e-rate-limiting
-      - type: ResourcesEndpoints
-        url: https://help.nuclino.com/e30a68b1-resources-endpoints
-      - type: ItemsCollections
-        url: https://help.nuclino.com/fa38d15f-items-and-collections
-      - type: Users
-        url: https://help.nuclino.com/f76dc920-users
-      - type: Workspaces
-        url: https://help.nuclino.com/702467a8-workspaces
-      - type: ResponseFormat
-        url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
-      - type: Blog
-        url: https://blog.nuclino.com/
-      - type: Plans
-        url: plans/nuclino-plans-pricing.yml
-      - type: RateLimits
-        url: rate-limits/nuclino-rate-limits.yml
-      - type: FinOps
-        url: finops/nuclino-finops.yml
-      - type: OpenAPI
-        url: openapi/nuclino-openapi.json
+- aid: nuclino:nuclino-collections-api
+  name: Nuclino Collections API
+  description: Groups/folders of items
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-collections-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+- aid: nuclino:nuclino-files-api
+  name: Nuclino Files API
+  description: File management
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-files-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+- aid: nuclino:nuclino-items-api
+  name: Nuclino Items API
+  description: Wiki pages and documents
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Items
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-items-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+- aid: nuclino:nuclino-teams-api
+  name: Nuclino Teams API
+  description: Team management
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-teams-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+- aid: nuclino:nuclino-users-api
+  name: Nuclino Users API
+  description: User management
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-users-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
+- aid: nuclino:nuclino-workspaces-api
+  name: Nuclino Workspaces API
+  description: Workspace management
+  humanURL: https://www.nuclino.com/api
+  baseURL: https://api.nuclino.com/v0
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/nuclino-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://help.nuclino.com/d3a29686-api
+  - type: Authentication
+    url: https://help.nuclino.com/8090bb76-authentication
+  - type: RateLimits
+    url: https://help.nuclino.com/b147124e-rate-limiting
+  - type: ResourcesEndpoints
+    url: https://help.nuclino.com/e30a68b1-resources-endpoints
+  - type: ItemsCollections
+    url: https://help.nuclino.com/fa38d15f-items-and-collections
+  - type: Users
+    url: https://help.nuclino.com/f76dc920-users
+  - type: Workspaces
+    url: https://help.nuclino.com/702467a8-workspaces
+  - type: ResponseFormat
+    url: https://help.nuclino.com/0a1bea6c-response-format-and-errors
+  - type: Blog
+    url: https://blog.nuclino.com/
+  - type: Plans
+    url: plans/nuclino-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nuclino-rate-limits.yml
+  - type: FinOps
+    url: finops/nuclino-finops.yml
 common:
   - type: AgenticAccess
     url: agentic-access/nuclino-agentic-access.yml
