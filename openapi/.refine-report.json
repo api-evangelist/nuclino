@@ -1,0 +1,24 @@
+{
+  "provider": "nuclino",
+  "sources": [
+    "nuclino-collections-api-openapi.yml",
+    "nuclino-files-api-openapi.yml",
+    "nuclino-items-api-openapi.yml",
+    "nuclino-teams-api-openapi.yml",
+    "nuclino-users-api-openapi.yml",
+    "nuclino-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "nuclino-collections-api-openapi.yml",
+    "nuclino-files-api-openapi.yml",
+    "nuclino-items-api-openapi.yml",
+    "nuclino-teams-api-openapi.yml",
+    "nuclino-users-api-openapi.yml",
+    "nuclino-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,1204 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Nuclino API",
+    "description": "REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.",
+    "version": "v0",
+    "contact": {
+      "name": "Nuclino Support",
+      "url": "https://help.nuclino.com/d3a29686-api"
+    },
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "externalDocs": {
+    "description": "Nuclino API Documentation",
+    "url": "https://help.nuclino.com/d3a29686-api"
+  },
+  "servers": [
+    {
+      "url": "https://api.nuclino.com/v0",
+      "description": "Nuclino API v0"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Items",
+      "description": "Wiki pages and documents"
+    },
+    {
+      "name": "Collections",
+      "description": "Groups/folders of items"
+    },
+    {
+      "name": "Workspaces",
+      "description": "Workspace management"
+    },
+    {
+      "name": "Users",
+      "description": "User management"
+    },
+    {
+      "name": "Teams",
+      "description": "Team management"
+    },
+    {
+      "name": "Files",
+      "description": "File management"
+    }
+  ],
+  "paths": {
+    "/items": {
+      "get": {
+        "summary": "List items and collections",
+        "description": "Returns a list of items and collections. Filter by team or workspace. Supports full-text search via the `search` parameter. Does not include the `content` field.",
+        "operationId": "listItems",
+        "tags": ["Items", "Collections"],
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "description": "Filter items by team UUID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "workspaceId",
+            "in": "query",
+            "description": "Filter items by workspace UUID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Full-text search query. When provided, returns matching items with a `highlight` field.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results to return (1-100)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "Cursor UUID for pagination (returns results after this item)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of items and collections",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemListResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "object": "list",
+                    "items": [
+                      {
+                        "object": "item",
+                        "id": "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d",
+                        "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "url": "https://app.nuclino.com/t/i/3c9b6b5a",
+                        "title": "Getting Started",
+                        "createdAt": "2024-01-15T10:00:00.000Z",
+                        "createdUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "lastUpdatedAt": "2024-03-20T14:30:00.000Z",
+                        "lastUpdatedUserId": "u1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create item or collection",
+        "description": "Creates a new item (wiki page) or collection (page group) in a workspace.",
+        "operationId": "createItem",
+        "tags": ["Items", "Collections"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemRequest"
+              },
+              "example": {
+                "workspaceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "object": "item",
+                "title": "My New Page",
+                "content": "# Welcome\n\nThis is a new page."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created item or collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/items/{id}": {
+      "get": {
+        "summary": "Retrieve item or collection",
+        "description": "Returns a single item or collection by its UUID, including the full `content` field in Markdown.",
+        "operationId": "getItem",
+        "tags": ["Items", "Collections"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the item or collection",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item or collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update item or collection",
+        "description": "Updates the title and/or content of an existing item or collection.",
+        "operationId": "updateItem",
+        "tags": ["Items", "Collections"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the item or collection to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateItemRequest"
+              },
+              "example": {
+                "title": "Updated Page Title",
+                "content": "# Updated Content\n\nNew body text."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated item or collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete item or collection",
+        "description": "Moves an item or collection to the trash. Returns the ID of the deleted item.",
+        "operationId": "deleteItem",
+        "tags": ["Items", "Collections"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the item or collection to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ID of the deleted item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "id": "3c9b6b5a-1f2e-4b3a-8d9c-0e1f2a3b4c5d"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/workspaces": {
+      "get": {
+        "summary": "List workspaces",
+        "description": "Returns a list of workspaces, optionally filtered by team. Supports cursor-based pagination.",
+        "operationId": "listWorkspaces",
+        "tags": ["Workspaces"],
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "description": "Filter workspaces by team UUID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results to return (1-100)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "Cursor UUID for pagination",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of workspaces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/workspaces/{id}": {
+      "get": {
+        "summary": "Retrieve workspace",
+        "description": "Returns a single workspace by its UUID.",
+        "operationId": "getWorkspace",
+        "tags": ["Workspaces"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the workspace",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested workspace",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Retrieve user",
+        "description": "Returns a single user by their UUID.",
+        "operationId": "getUser",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the user",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "object": "user",
+                    "id": "u1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "firstName": "Jane",
+                    "lastName": "Doe",
+                    "email": "jane.doe@example.com",
+                    "avatarUrl": "https://cdn.nuclino.com/avatars/jane.png"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "summary": "List teams",
+        "description": "Returns the teams accessible to the authenticated API key.",
+        "operationId": "listTeams",
+        "tags": ["Teams"],
+        "responses": {
+          "200": {
+            "description": "A list of teams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamListResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "object": "list",
+                    "items": [
+                      {
+                        "object": "team",
+                        "id": "t1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "name": "Acme Corp"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/teams/{id}": {
+      "get": {
+        "summary": "Retrieve team",
+        "description": "Returns a single team by its UUID.",
+        "operationId": "getTeam",
+        "tags": ["Teams"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the team",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested team",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/files/{id}": {
+      "get": {
+        "summary": "Retrieve file",
+        "description": "Returns metadata and a temporary download URL for a file attachment.",
+        "operationId": "getFile",
+        "tags": ["Files"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the file",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File metadata and download URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "API key authentication. Pass your API key in the Authorization header."
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "description": "A Nuclino item (wiki page) or collection (page group)",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["item", "collection"],
+            "description": "Type of object"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier"
+          },
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the parent workspace"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Direct URL to the item in the Nuclino app"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the item or collection"
+          },
+          "content": {
+            "type": "string",
+            "description": "Body content in Markdown format (only returned on single-item GET)"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 creation timestamp"
+          },
+          "createdUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the user who created the item"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 last-updated timestamp"
+          },
+          "lastUpdatedUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the user who last updated the item"
+          },
+          "childIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "IDs of child items (for collections)"
+          },
+          "highlight": {
+            "type": "string",
+            "description": "Search match excerpt (only present in search results)"
+          }
+        }
+      },
+      "Workspace": {
+        "type": "object",
+        "description": "A Nuclino workspace",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["workspace"],
+            "description": "Object type identifier"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier"
+          },
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the team that owns this workspace"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the workspace"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 creation timestamp"
+          },
+          "createdUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the user who created the workspace"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Field"
+            },
+            "description": "Custom fields defined for this workspace"
+          },
+          "childIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "IDs of top-level child items and collections"
+          }
+        }
+      },
+      "Team": {
+        "type": "object",
+        "description": "A Nuclino team",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["team"],
+            "description": "Object type identifier"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the team"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "description": "A Nuclino user",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["user"],
+            "description": "Object type identifier"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User's first name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User's last name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the user's avatar image (optional)"
+          }
+        }
+      },
+      "Field": {
+        "type": "object",
+        "description": "A custom field defined on a workspace",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier of the field"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the field"
+          },
+          "type": {
+            "type": "string",
+            "description": "Data type of the field"
+          }
+        }
+      },
+      "File": {
+        "type": "object",
+        "description": "A file attachment",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["file"],
+            "description": "Object type identifier"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier"
+          },
+          "itemId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the item this file is attached to"
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Original file name"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 creation timestamp"
+          },
+          "createdUserId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the user who uploaded the file"
+          },
+          "download": {
+            "type": "object",
+            "description": "Temporary download details",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "Temporary URL to download the file"
+              },
+              "expiresAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Expiry time of the download URL"
+              }
+            }
+          }
+        }
+      },
+      "CreateItemRequest": {
+        "type": "object",
+        "description": "Request body for creating an item or collection",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the workspace to create the item in"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the parent collection (if nesting)"
+          },
+          "object": {
+            "type": "string",
+            "enum": ["item", "collection"],
+            "default": "item",
+            "description": "Type of object to create"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the item or collection"
+          },
+          "content": {
+            "type": "string",
+            "description": "Initial body content in Markdown format (items only)"
+          },
+          "index": {
+            "type": "integer",
+            "description": "Position index within the parent (0-based)"
+          }
+        }
+      },
+      "UpdateItemRequest": {
+        "type": "object",
+        "description": "Request body for updating an item or collection",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "New title"
+          },
+          "content": {
+            "type": "string",
+            "description": "New body content in Markdown format"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "description": "Standard API response envelope",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "fail", "error"],
+            "description": "Response status"
+          }
+        }
+      },
+      "ItemResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        ]
+      },
+      "ItemListResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": ["list"]
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Item"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "WorkspaceResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/Workspace"
+              }
+            }
+          }
+        ]
+      },
+      "WorkspaceListResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": ["list"]
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Workspace"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "TeamResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/Team"
+              }
+            }
+          }
+        ]
+      },
+      "TeamListResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": ["list"]
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Team"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "UserResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        ]
+      },
+      "FileResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/File"
+              }
+            }
+          }
+        ]
+      },
+      "DeleteResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "ID of the deleted resource"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["fail", "error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request - invalid parameters or request body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Invalid request parameters"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - missing or invalid API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Unauthorized"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found - the resource does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Not found"
+            }
+          }
+        }
+      },
+      "RateLimitExceeded": {
+        "description": "Too Many Requests - rate limit of 150 requests/minute exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Rate limit exceeded"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": "error",
+              "message": "Unexpected server error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
