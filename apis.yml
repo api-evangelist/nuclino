@@ -266,7 +266,7 @@ common:
     url: https://app.nuclino.com/login
   - type: APIKeys
     url: https://help.nuclino.com/04598850-manage-api-keys
-  - type: MCP
+  - type: Documentation
     url: https://help.nuclino.com/70af7f4f-connect-nuclino-to-ai-assistants-with-mcp
   - type: Plans
     url: plans/nuclino-plans-pricing.yml
