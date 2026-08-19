@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nuclino Collections API",
+    "version": "v0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List items and collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/items",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Filter items by team UUID"
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter items by workspace UUID"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query. When provided, returns matching items with a `highlight` field."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return (1-100)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor UUID for pagination (returns results after this item)"
+              }
+            ]
+          },
+          "docs": "Returns a list of items and collections. Filter by team or workspace. Supports full-text search via the `search` parameter. Does not include the `content` field."
+        },
+        {
+          "info": {
+            "name": "Create item or collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nuclino.com/v0/items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new item (wiki page) or collection (page group) in a workspace."
+        },
+        {
+          "info": {
+            "name": "Retrieve item or collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/items/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the item or collection"
+              }
+            ]
+          },
+          "docs": "Returns a single item or collection by its UUID, including the full `content` field in Markdown."
+        },
+        {
+          "info": {
+            "name": "Update item or collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.nuclino.com/v0/items/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the item or collection to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the title and/or content of an existing item or collection."
+        },
+        {
+          "info": {
+            "name": "Delete item or collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.nuclino.com/v0/items/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the item or collection to delete"
+              }
+            ]
+          },
+          "docs": "Moves an item or collection to the trash. Returns the ID of the deleted item."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

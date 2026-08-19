@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nuclino Collections Teams API",
+    "version": "v0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/teams"
+          },
+          "docs": "Returns the teams accessible to the authenticated API key."
+        },
+        {
+          "info": {
+            "name": "Retrieve team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/teams/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the team"
+              }
+            ]
+          },
+          "docs": "Returns a single team by its UUID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

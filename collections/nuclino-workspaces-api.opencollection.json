@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nuclino Collections Workspaces API",
+    "version": "v0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/workspaces",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Filter workspaces by team UUID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return (1-100)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor UUID for pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of workspaces, optionally filtered by team. Supports cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Retrieve workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nuclino.com/v0/workspaces/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the workspace"
+              }
+            ]
+          },
+          "docs": "Returns a single workspace by its UUID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
