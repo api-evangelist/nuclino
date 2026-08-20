@@ -29,6 +29,14 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
+  - Knowledge-Management
+  - Team Workspace
+  - Documentation
+  - Wiki
+  - Collaboration
+  - Project Management
+  - REST API
+tags_raw:
   - Knowledge Management
   - Team Workspace
   - Documentation
@@ -43,6 +51,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
@@ -77,6 +87,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -111,6 +123,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - Item
+  tags_raw:
   - Items
   properties:
   - type: OpenAPI
@@ -145,6 +159,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -179,6 +195,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
