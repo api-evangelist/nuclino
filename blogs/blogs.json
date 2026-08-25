@@ -6,19 +6,17 @@
       "feed_url": "https://help.nuclino.com/0a1bea6c-response-format-and-errors",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     },
     {
       "source": "https://www.nuclino.com/pricing",
       "feed_url": "https://www.nuclino.com/pricing",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     }
   ],
-  "fetched": "2026-08-15T12:11:08Z",
+  "fetched": "2026-08-22T20:20:02Z",
   "post_count": 0,
   "agent_pulled": "2026-07-04"
 }
