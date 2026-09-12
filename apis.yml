@@ -273,6 +273,8 @@ apis:
   - type: FinOps
     url: finops/nuclino-finops.yml
 common:
+  - type: Website
+    url: https://www.nuclino.com/
   - type: AgenticAccess
     url: agentic-access/nuclino-agentic-access.yml
   - type: TrustCenter
