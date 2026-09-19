@@ -244,6 +244,8 @@ apis:
   humanURL: https://www.nuclino.com/api
   baseURL: https://api.nuclino.com/v0
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
