@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Nuclino Collections Workspaces API
+  title: Nuclino Workspaces API
   description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
   version: v0
   contact:
@@ -93,15 +93,6 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    ServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            message: Unexpected server error
     RateLimitExceeded:
       description: Too Many Requests - rate limit of 150 requests/minute exceeded
       content:
@@ -129,34 +120,16 @@ components:
           example:
             status: fail
             message: Not found
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
   schemas:
-    WorkspaceListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              object:
-                type: string
-                enum:
-                - list
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Workspace'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
     Field:
       type: object
       description: A custom field defined on a workspace
@@ -171,17 +144,13 @@ components:
         type:
           type: string
           description: Data type of the field
-    ApiResponse:
-      type: object
-      description: Standard API response envelope
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - fail
-          - error
-          description: Response status
+    WorkspaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Workspace'
     Workspace:
       type: object
       description: A Nuclino workspace
@@ -221,13 +190,44 @@ components:
             type: string
             format: uuid
           description: IDs of top-level child items and collections
-    WorkspaceResponse:
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
+    WorkspaceListResponse:
       allOf:
       - $ref: '#/components/schemas/ApiResponse'
       - type: object
         properties:
           data:
-            $ref: '#/components/schemas/Workspace'
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

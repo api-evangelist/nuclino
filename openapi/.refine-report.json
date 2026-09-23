@@ -1,12 +1,7 @@
 {
   "provider": "nuclino",
   "sources": [
-    "nuclino-collections-api-openapi.yml",
-    "nuclino-files-api-openapi.yml",
-    "nuclino-items-api-openapi.yml",
-    "nuclino-teams-api-openapi.yml",
-    "nuclino-users-api-openapi.yml",
-    "nuclino-workspaces-api-openapi.yml"
+    "_original/nuclino-openapi.json"
   ],
   "outputs": [
     "nuclino-collections-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nuclino-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "nuclino-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuclino-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuclino-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuclino-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuclino-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuclino-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

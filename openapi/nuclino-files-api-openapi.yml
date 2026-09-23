@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Nuclino Collections Files API
+  title: Nuclino Files API
   description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
   version: v0
   contact:
@@ -48,44 +48,14 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    ServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            message: Unexpected server error
-    Unauthorized:
-      description: Unauthorized - missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Unauthorized
-    NotFound:
-      description: Not Found - the resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Not found
-    RateLimitExceeded:
-      description: Too Many Requests - rate limit of 150 requests/minute exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Rate limit exceeded
   schemas:
+    FileResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/File'
     File:
       type: object
       description: A file attachment
@@ -126,17 +96,6 @@ components:
               type: string
               format: date-time
               description: Expiry time of the download URL
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
     ApiResponse:
       type: object
       description: Standard API response envelope
@@ -148,13 +107,54 @@ components:
           - fail
           - error
           description: Response status
-    FileResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/File'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+  responses:
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Rate limit exceeded
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

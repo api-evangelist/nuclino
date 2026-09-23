@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Nuclino Collections Teams API
+  title: Nuclino Teams API
   description: REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.
   version: v0
   contact:
@@ -77,15 +77,15 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    ServerError:
-      description: Internal Server Error
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
           example:
-            status: error
-            message: Unexpected server error
+            status: fail
+            message: Rate limit exceeded
     Unauthorized:
       description: Unauthorized - missing or invalid API key
       content:
@@ -104,15 +104,15 @@ components:
           example:
             status: fail
             message: Not found
-    RateLimitExceeded:
-      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+    ServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
           example:
-            status: fail
-            message: Rate limit exceeded
+            status: error
+            message: Unexpected server error
   schemas:
     TeamResponse:
       allOf:
@@ -121,17 +121,17 @@ components:
         properties:
           data:
             $ref: '#/components/schemas/Team'
-    ErrorResponse:
+    ApiResponse:
       type: object
+      description: Standard API response envelope
       properties:
         status:
           type: string
           enum:
+          - success
           - fail
           - error
-        message:
-          type: string
-          description: Human-readable error message
+          description: Response status
     Team:
       type: object
       description: A Nuclino team
@@ -148,17 +148,6 @@ components:
         name:
           type: string
           description: Name of the team
-    ApiResponse:
-      type: object
-      description: Standard API response envelope
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - fail
-          - error
-          description: Response status
     TeamListResponse:
       allOf:
       - $ref: '#/components/schemas/ApiResponse'
@@ -175,6 +164,17 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Team'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
