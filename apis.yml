@@ -42,7 +42,7 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
-  - Knowledge-Management
+  - Knowledge Management
   - Team Workspace
   - Documentation
   - Wiki
@@ -57,6 +57,7 @@ tags_raw:
   - Collaboration
   - Project Management
   - REST API
+  - Knowledge-Management
 apis:
 - aid: nuclino:nuclino-collections-api
   name: Nuclino Collections API
