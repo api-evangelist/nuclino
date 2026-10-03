@@ -76,16 +76,69 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
+    TeamResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Team'
+    TeamListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+    Team:
+      type: object
+      description: A Nuclino team
+      properties:
+        object:
+          type: string
+          enum:
+          - team
+          description: Object type identifier
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        name:
+          type: string
+          description: Name of the team
   responses:
-    NotFound:
-      description: Not Found - the resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Not found
     Unauthorized:
       description: Unauthorized - missing or invalid API key
       content:
@@ -95,6 +148,15 @@ components:
           example:
             status: fail
             message: Unauthorized
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
     ServerError:
       description: Internal Server Error
       content:
@@ -113,68 +175,6 @@ components:
           example:
             status: fail
             message: Rate limit exceeded
-  schemas:
-    ApiResponse:
-      type: object
-      description: Standard API response envelope
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - fail
-          - error
-          description: Response status
-    TeamListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              object:
-                type: string
-                enum:
-                - list
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Team'
-    TeamResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/Team'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
-    Team:
-      type: object
-      description: A Nuclino team
-      properties:
-        object:
-          type: string
-          enum:
-          - team
-          description: Object type identifier
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier
-        name:
-          type: string
-          description: Name of the team
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

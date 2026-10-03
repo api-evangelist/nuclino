@@ -107,17 +107,6 @@ components:
         type:
           type: string
           description: Data type of the field
-    ApiResponse:
-      type: object
-      description: Standard API response envelope
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - fail
-          - error
-          description: Response status
     ErrorResponse:
       type: object
       properties:
@@ -129,6 +118,17 @@ components:
         message:
           type: string
           description: Human-readable error message
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
     Workspace:
       type: object
       description: A Nuclino workspace
@@ -168,6 +168,13 @@ components:
             type: string
             format: uuid
           description: IDs of top-level child items and collections
+    WorkspaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Workspace'
     WorkspaceListResponse:
       allOf:
       - $ref: '#/components/schemas/ApiResponse'
@@ -184,23 +191,7 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Workspace'
-    WorkspaceResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/Workspace'
   responses:
-    NotFound:
-      description: Not Found - the resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Not found
     Unauthorized:
       description: Unauthorized - missing or invalid API key
       content:
@@ -210,15 +201,15 @@ components:
           example:
             status: fail
             message: Unauthorized
-    ServerError:
-      description: Internal Server Error
+    NotFound:
+      description: Not Found - the resource does not exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
           example:
-            status: error
-            message: Unexpected server error
+            status: fail
+            message: Not found
     RateLimitExceeded:
       description: Too Many Requests - rate limit of 150 requests/minute exceeded
       content:
@@ -228,6 +219,15 @@ components:
           example:
             status: fail
             message: Rate limit exceeded
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
