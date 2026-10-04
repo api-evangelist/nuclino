@@ -49,17 +49,13 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
+    FileResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/File'
     File:
       type: object
       description: A file attachment
@@ -100,6 +96,17 @@ components:
               type: string
               format: date-time
               description: Expiry time of the download URL
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
     ApiResponse:
       type: object
       description: Standard API response envelope
@@ -111,13 +118,6 @@ components:
           - fail
           - error
           description: Response status
-    FileResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/File'
   responses:
     Unauthorized:
       description: Unauthorized - missing or invalid API key
@@ -128,6 +128,15 @@ components:
           example:
             status: fail
             message: Unauthorized
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
     NotFound:
       description: Not Found - the resource does not exist
       content:
@@ -146,15 +155,6 @@ components:
           example:
             status: fail
             message: Rate limit exceeded
-    ServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            message: Unexpected server error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
