@@ -276,6 +276,9 @@ apis:
   - type: FinOps
     url: finops/nuclino-finops.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/nuclino-capability-edges.yml
+    name: Nuclino Business Capability Map
   - type: Website
     url: https://www.nuclino.com/
   - type: AgenticAccess
