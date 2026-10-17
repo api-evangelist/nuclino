@@ -49,13 +49,6 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    FileResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/File'
     File:
       type: object
       description: A file attachment
@@ -118,16 +111,14 @@ components:
           - fail
           - error
           description: Response status
+    FileResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/File'
   responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Unauthorized
     ServerError:
       description: Internal Server Error
       content:
@@ -146,6 +137,15 @@ components:
           example:
             status: fail
             message: Not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
     RateLimitExceeded:
       description: Too Many Requests - rate limit of 150 requests/minute exceeded
       content:

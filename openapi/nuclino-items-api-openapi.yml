@@ -230,53 +230,84 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Unauthorized
-    ServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: error
-            message: Unexpected server error
-    NotFound:
-      description: Not Found - the resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Not found
-    RateLimitExceeded:
-      description: Too Many Requests - rate limit of 150 requests/minute exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Rate limit exceeded
-    BadRequest:
-      description: Bad Request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Invalid request parameters
   schemas:
+    CreateItemRequest:
+      type: object
+      description: Request body for creating an item or collection
+      properties:
+        workspaceId:
+          type: string
+          format: uuid
+          description: ID of the workspace to create the item in
+        parentId:
+          type: string
+          format: uuid
+          description: ID of the parent collection (if nesting)
+        object:
+          type: string
+          enum:
+          - item
+          - collection
+          default: item
+          description: Type of object to create
+        title:
+          type: string
+          description: Title of the item or collection
+        content:
+          type: string
+          description: Initial body content in Markdown format (items only)
+        index:
+          type: integer
+          description: Position index within the parent (0-based)
+    UpdateItemRequest:
+      type: object
+      description: Request body for updating an item or collection
+      properties:
+        title:
+          type: string
+          description: New title
+        content:
+          type: string
+          description: New body content in Markdown format
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    DeleteResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: ID of the deleted resource
+    ItemListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
     Item:
       type: object
       description: A Nuclino item (wiki page) or collection (page group)
@@ -330,90 +361,6 @@ components:
         highlight:
           type: string
           description: Search match excerpt (only present in search results)
-    ItemListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              object:
-                type: string
-                enum:
-                - list
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Item'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
-    ItemResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/Item'
-    UpdateItemRequest:
-      type: object
-      description: Request body for updating an item or collection
-      properties:
-        title:
-          type: string
-          description: New title
-        content:
-          type: string
-          description: New body content in Markdown format
-    DeleteResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                description: ID of the deleted resource
-    CreateItemRequest:
-      type: object
-      description: Request body for creating an item or collection
-      properties:
-        workspaceId:
-          type: string
-          format: uuid
-          description: ID of the workspace to create the item in
-        parentId:
-          type: string
-          format: uuid
-          description: ID of the parent collection (if nesting)
-        object:
-          type: string
-          enum:
-          - item
-          - collection
-          default: item
-          description: Type of object to create
-        title:
-          type: string
-          description: Title of the item or collection
-        content:
-          type: string
-          description: Initial body content in Markdown format (items only)
-        index:
-          type: integer
-          description: Position index within the parent (0-based)
     ApiResponse:
       type: object
       description: Standard API response envelope
@@ -425,6 +372,59 @@ components:
           - fail
           - error
           description: Response status
+    ItemResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Item'
+  responses:
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: error
+            message: Unexpected server error
+    BadRequest:
+      description: Bad Request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Invalid request parameters
+    NotFound:
+      description: Not Found - the resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
+    RateLimitExceeded:
+      description: Too Many Requests - rate limit of 150 requests/minute exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Rate limit exceeded
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

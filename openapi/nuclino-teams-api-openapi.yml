@@ -76,16 +76,69 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  schemas:
+    TeamListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - list
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+    Team:
+      type: object
+      description: A Nuclino team
+      properties:
+        object:
+          type: string
+          enum:
+          - team
+          description: Object type identifier
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        name:
+          type: string
+          description: Name of the team
+    TeamResponse:
+      allOf:
+      - $ref: '#/components/schemas/ApiResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Team'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - fail
+          - error
+        message:
+          type: string
+          description: Human-readable error message
+    ApiResponse:
+      type: object
+      description: Standard API response envelope
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+          - error
+          description: Response status
   responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            status: fail
-            message: Unauthorized
     ServerError:
       description: Internal Server Error
       content:
@@ -104,6 +157,15 @@ components:
           example:
             status: fail
             message: Not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: fail
+            message: Unauthorized
     RateLimitExceeded:
       description: Too Many Requests - rate limit of 150 requests/minute exceeded
       content:
@@ -113,68 +175,6 @@ components:
           example:
             status: fail
             message: Rate limit exceeded
-  schemas:
-    TeamResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/Team'
-    TeamListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ApiResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              object:
-                type: string
-                enum:
-                - list
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Team'
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - fail
-          - error
-        message:
-          type: string
-          description: Human-readable error message
-    Team:
-      type: object
-      description: A Nuclino team
-      properties:
-        object:
-          type: string
-          enum:
-          - team
-          description: Object type identifier
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier
-        name:
-          type: string
-          description: Name of the team
-    ApiResponse:
-      type: object
-      description: Standard API response envelope
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - fail
-          - error
-          description: Response status
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
