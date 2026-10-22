@@ -55,3 +55,16 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: nuclino-miro-own
+  label: Miro (own)
+  partner: miro
+  partner_name: Miro (own)
+  category: Miro app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://miro.com/marketplace/nuclino/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
