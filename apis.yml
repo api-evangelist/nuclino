@@ -276,6 +276,8 @@ apis:
   - type: FinOps
     url: finops/nuclino-finops.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/nuclino/overview
   - url: https://www.nuclino.com/articles
     type: Blog
   - type: CapabilityMap
