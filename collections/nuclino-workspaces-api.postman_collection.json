@@ -1,605 +1,596 @@
 {
+  "info": {
+    "_postman_id": "00bc469a-cd10-4d76-a67a-e7a264cd646f",
+    "name": "Nuclino Workspaces API",
+    "description": "REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.\n\nContact Support:\n Name: Nuclino Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:27:09.000Z",
+    "updatedAt": "2026-10-22T01:27:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-00bc469a-cd10-4d76-a67a-e7a264cd646f"
+  },
   "item": [
     {
-      "id": "6a2ce42c-eba8-42ca-81a9-9baded206d9f",
-      "name": "Workspaces",
-      "description": {
-        "content": "Workspace management",
-        "type": "text/plain"
-      },
+      "name": "workspaces",
       "item": [
         {
-          "id": "8a7bed62-c2f6-42f1-b68a-ef7011cbd350",
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Retrieve workspace",
+              "id": "8fb43db9-bd6a-4363-9a75-659368521b69",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "1a50db16-f27a-4486-922d-2c773bf4f609",
+                      "key": "id",
+                      "value": "<uuid>",
+                      "description": "(Required) UUID of the workspace"
+                    }
+                  ]
+                },
+                "description": "Returns a single workspace by its UUID."
+              },
+              "response": [
+                {
+                  "id": "62bb4c24-b9e8-48e8-8d3c-fe8505cced07",
+                  "name": "The requested workspace",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"fail\",\n  \"data\": {\n    \"object\": \"workspace\",\n    \"id\": \"<uuid>\",\n    \"teamId\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"createdAt\": \"<dateTime>\",\n    \"createdUserId\": \"<uuid>\",\n    \"fields\": [\n      {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"type\": \"<string>\"\n      }\n    ],\n    \"childIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-10-22T01:27:10.000Z",
+                  "updatedAt": "2026-10-22T01:27:10.000Z",
+                  "uid": "35240-62bb4c24-b9e8-48e8-8d3c-fe8505cced07"
+                },
+                {
+                  "id": "ef052240-4430-4d1e-a6fc-4c089568e1e2",
+                  "name": "Unauthorized - missing or invalid API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:27:10.000Z",
+                  "updatedAt": "2026-10-22T01:27:10.000Z",
+                  "uid": "35240-ef052240-4430-4d1e-a6fc-4c089568e1e2"
+                },
+                {
+                  "id": "9010c95c-7e9c-4228-bad0-bad394abcd15",
+                  "name": "Not Found - the resource does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:27:10.000Z",
+                  "updatedAt": "2026-10-22T01:27:10.000Z",
+                  "uid": "35240-9010c95c-7e9c-4228-bad0-bad394abcd15"
+                },
+                {
+                  "id": "f10e320e-4b7f-4c0b-ad20-5a74d237942a",
+                  "name": "Too Many Requests - rate limit of 150 requests/minute exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:27:10.000Z",
+                  "updatedAt": "2026-10-22T01:27:10.000Z",
+                  "uid": "35240-f10e320e-4b7f-4c0b-ad20-5a74d237942a"
+                },
+                {
+                  "id": "096dfaa9-17db-4b6c-8c6c-a3823968c800",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaces/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaces",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:27:10.000Z",
+                  "updatedAt": "2026-10-22T01:27:10.000Z",
+                  "uid": "35240-096dfaa9-17db-4b6c-8c6c-a3823968c800"
+                }
+              ],
+              "createdAt": "2026-10-22T01:27:10.000Z",
+              "updatedAt": "2026-10-22T01:27:10.000Z",
+              "uid": "35240-8fb43db9-bd6a-4363-9a75-659368521b69"
+            }
+          ],
+          "id": "232238bf-6dc2-4229-956b-cffb41ff59fe",
+          "createdAt": "2026-10-22T01:27:10.000Z",
+          "updatedAt": "2026-10-22T01:27:10.000Z",
+          "uid": "35240-232238bf-6dc2-4229-956b-cffb41ff59fe"
+        },
+        {
           "name": "List workspaces",
+          "id": "d79d3390-c920-46e2-be59-e613c7fc1671",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List workspaces",
-            "description": {
-              "content": "Returns a list of workspaces, optionally filtered by team. Supports cursor-based pagination.",
-              "type": "text/plain"
-            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/workspaces?teamId=<uuid>&limit=100&after=<uuid>",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "workspaces"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "Filter workspaces by team UUID",
                   "key": "teamId",
-                  "value": "<uuid>",
-                  "description": "Filter workspaces by team UUID"
+                  "value": "<uuid>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Number of results to return (1-100)",
                   "key": "limit",
-                  "value": "100",
-                  "description": "Number of results to return (1-100)"
+                  "value": "100"
                 },
                 {
-                  "disabled": false,
+                  "description": "Cursor UUID for pagination",
                   "key": "after",
-                  "value": "<uuid>",
-                  "description": "Cursor UUID for pagination"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "3f672462-9cf0-4b23-9cee-50be04d069b6",
-              "name": "A list of workspaces",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "after",
-                      "value": "<uuid>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"fail\",\n  \"data\": {\n    \"object\": \"list\",\n    \"items\": [\n      {\n        \"object\": \"workspace\",\n        \"id\": \"546e0cab-a3e0-71eb-3b2f-7ab1b63393f9\",\n        \"teamId\": \"76adf0e2-387c-b2f5-9d90-65e095e72141\",\n        \"name\": \"string\",\n        \"createdAt\": \"2001-12-16T22:22:55.593Z\",\n        \"createdUserId\": \"aabad4c9-37eb-4cf1-316a-daaf4a9cfd6b\",\n        \"fields\": [\n          {\n            \"id\": \"82e6a999-5985-7f93-6247-5c3a4094524e\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          {\n            \"id\": \"2fb682f7-678c-c8dc-eb90-32d0d93d35cc\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        ],\n        \"childIds\": [\n          \"1b612922-7a45-1d89-63a0-05794d8109a9\",\n          \"7248f29d-ebea-4fd5-fa90-b7a4c6b9030e\"\n        ]\n      },\n      {\n        \"object\": \"workspace\",\n        \"id\": \"6281b673-be3f-ca18-863f-02e1a5c74bd7\",\n        \"teamId\": \"fcf4cd47-421e-7b7b-d81f-7c3978f6e08f\",\n        \"name\": \"string\",\n        \"createdAt\": \"1977-07-09T09:58:24.025Z\",\n        \"createdUserId\": \"effec72b-fa3a-d765-810b-52127595f604\",\n        \"fields\": [\n          {\n            \"id\": \"aa8923e1-701d-86d2-8860-33c4a6423fc7\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          },\n          {\n            \"id\": \"5b4489d3-a12f-7fe1-cf4e-093dd8c3489f\",\n            \"name\": \"string\",\n            \"type\": \"string\"\n          }\n        ],\n        \"childIds\": [\n          \"64a02b11-d46f-443b-e562-b828a0beb92a\",\n          \"5b5abbf4-ccd8-5717-31ae-6ac26b23ca54\"\n        ]\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9352af38-3df9-4fdd-8d64-74bb66afba1c",
-              "name": "Unauthorized - missing or invalid API key",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "after",
-                      "value": "<uuid>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"fail\",\n  \"message\": \"Unauthorized\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dd78bb39-9f28-4ed7-a1ff-7457f985adf3",
-              "name": "Too Many Requests - rate limit of 150 requests/minute exceeded",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "after",
-                      "value": "<uuid>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"fail\",\n  \"message\": \"Rate limit exceeded\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e00f2eba-65f2-4ec1-80f9-4c5b5e84ba08",
-              "name": "Internal Server Error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "after",
-                      "value": "<uuid>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unexpected server error\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "6c79bb5b-08dd-4149-bb05-0db44e48874b",
-          "name": "Retrieve workspace",
-          "request": {
-            "name": "Retrieve workspace",
-            "description": {
-              "content": "Returns a single workspace by its UUID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "workspaces",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "id",
-                  "description": "(Required) UUID of the workspace"
+                  "value": "<uuid>"
                 }
               ]
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "Returns a list of workspaces, optionally filtered by team. Supports cursor-based pagination."
           },
           "response": [
             {
-              "id": "f800f548-87d9-428d-99fe-c4f3a190efbd",
-              "name": "The requested workspace",
+              "id": "be0b65e6-7e08-44a0-81a4-2d9cf3d3be5c",
+              "name": "A list of workspaces",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "id",
-                      "description": "(Required) UUID of the workspace"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?teamId=<uuid>&limit=100&after=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by team UUID",
+                      "key": "teamId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Number of results to return (1-100)",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Cursor UUID for pagination",
+                      "key": "after",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"status\": \"fail\",\n  \"data\": {\n    \"object\": \"workspace\",\n    \"id\": \"aeb6bf80-b342-6ed6-104b-4913110f6ddd\",\n    \"teamId\": \"0b07866c-e944-b2ac-9778-9c4d01a7269b\",\n    \"name\": \"string\",\n    \"createdAt\": \"2012-08-03T02:27:25.127Z\",\n    \"createdUserId\": \"91542864-ff67-4479-910f-387fce8f19b2\",\n    \"fields\": [\n      {\n        \"id\": \"39d4d062-221e-d710-6adc-d04f9bed5c54\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      {\n        \"id\": \"755cdb7e-4b0a-35b5-b343-61d69b8b3247\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    ],\n    \"childIds\": [\n      \"cc0a9f49-a1dd-1e83-1fed-59f27eab160a\",\n      \"91bdff7e-a0a4-41fc-7417-e463d18ed1a6\"\n    ]\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"status\": \"error\",\n  \"data\": {\n    \"object\": \"list\",\n    \"items\": [\n      {\n        \"object\": \"workspace\",\n        \"id\": \"<uuid>\",\n        \"teamId\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"createdAt\": \"<dateTime>\",\n        \"createdUserId\": \"<uuid>\",\n        \"fields\": [\n          {\n            \"id\": \"<uuid>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          },\n          {\n            \"id\": \"<uuid>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          }\n        ],\n        \"childIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      },\n      {\n        \"object\": \"workspace\",\n        \"id\": \"<uuid>\",\n        \"teamId\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"createdAt\": \"<dateTime>\",\n        \"createdUserId\": \"<uuid>\",\n        \"fields\": [\n          {\n            \"id\": \"<uuid>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          },\n          {\n            \"id\": \"<uuid>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          }\n        ],\n        \"childIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-10-22T01:27:10.000Z",
+              "updatedAt": "2026-10-22T01:27:10.000Z",
+              "uid": "35240-be0b65e6-7e08-44a0-81a4-2d9cf3d3be5c"
             },
             {
-              "id": "88828e7c-3b29-46ff-8985-d6fdb7346885",
+              "id": "be1c45ad-24b3-44c1-84f1-c97bd8006c26",
               "name": "Unauthorized - missing or invalid API key",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "id",
-                      "description": "(Required) UUID of the workspace"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?teamId=<uuid>&limit=100&after=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by team UUID",
+                      "key": "teamId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Number of results to return (1-100)",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Cursor UUID for pagination",
+                      "key": "after",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"status\": \"fail\",\n  \"message\": \"Unauthorized\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:27:10.000Z",
+              "updatedAt": "2026-10-22T01:27:10.000Z",
+              "uid": "35240-be1c45ad-24b3-44c1-84f1-c97bd8006c26"
             },
             {
-              "id": "c7a6e3b3-ce41-4927-811d-4fb344f556c5",
-              "name": "Not Found - the resource does not exist",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "id",
-                      "description": "(Required) UUID of the workspace"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"fail\",\n  \"message\": \"Not found\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "36084713-a677-41db-94bd-fbbc521d6092",
+              "id": "1f4f6d8c-6382-4a71-ab5d-38513f9c8e7b",
               "name": "Too Many Requests - rate limit of 150 requests/minute exceeded",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "id",
-                      "description": "(Required) UUID of the workspace"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?teamId=<uuid>&limit=100&after=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by team UUID",
+                      "key": "teamId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Number of results to return (1-100)",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Cursor UUID for pagination",
+                      "key": "after",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"status\": \"fail\",\n  \"message\": \"Rate limit exceeded\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:27:10.000Z",
+              "updatedAt": "2026-10-22T01:27:10.000Z",
+              "uid": "35240-1f4f6d8c-6382-4a71-ab5d-38513f9c8e7b"
             },
             {
-              "id": "b521c1b6-804f-45fe-8cca-913f3c75ae97",
+              "id": "6cd70721-14e4-4920-bf82-2c0d13b0ea24",
               "name": "Internal Server Error",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "workspaces",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "id",
-                      "description": "(Required) UUID of the workspace"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<API Key>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/workspaces?teamId=<uuid>&limit=100&after=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaces"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter workspaces by team UUID",
+                      "key": "teamId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Number of results to return (1-100)",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Cursor UUID for pagination",
+                      "key": "after",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unexpected server error\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:27:10.000Z",
+              "updatedAt": "2026-10-22T01:27:10.000Z",
+              "uid": "35240-6cd70721-14e4-4920-bf82-2c0d13b0ea24"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:27:10.000Z",
+          "updatedAt": "2026-10-22T01:27:10.000Z",
+          "uid": "35240-d79d3390-c920-46e2-be59-e613c7fc1671"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.nuclino.com/v0",
-      "key": "baseUrl"
+      "id": "b0534d0f-7884-47f0-bbbd-a9cdf349aff5",
+      "createdAt": "2026-10-22T01:27:10.000Z",
+      "updatedAt": "2026-10-22T01:27:10.000Z",
+      "uid": "35240-b0534d0f-7884-47f0-bbbd-a9cdf349aff5"
     }
   ],
   "auth": {
@@ -607,25 +598,25 @@
     "apikey": [
       {
         "key": "key",
-        "value": "Authorization"
+        "value": "Authorization",
+        "type": "string"
       },
       {
         "key": "value",
-        "value": "{{apiKey}}"
+        "value": "{{apiKey}}",
+        "type": "string"
       },
       {
         "key": "in",
-        "value": "header"
+        "value": "header",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "019efb17-7aeb-4406-8fc7-caf52583c1de",
-    "name": "Nuclino Collections Workspaces API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for the Nuclino unified team workspace. Provides programmatic access to items (wiki pages), collections (page groups), workspaces, teams, users, fields, and files. All content is authored and returned in Markdown. Supports full CRUD on items and collections, full-text search, cursor-based pagination, and file download.\n\nContact Support:\n Name: Nuclino Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.nuclino.com/v0"
     }
-  }
+  ]
 }
