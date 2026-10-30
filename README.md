@@ -64,63 +64,157 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Nuclino is a unified team workspace that combines wikis, docs, and project management into a single collaborative platform. Teams use Nuclino to build internal knowledge bases, write documentation, manage projects, and share information across the organization using a graph-based content model that links items visually.
+Nuclino is a unified team workspace that combines wikis, docs, and project management into one collaborative platform. Its REST API enables developers to build integrations and automate tasks by programmatically managing items, collections, workspaces, teams, users, fields, and files using Markdown content. The API covers the full content lifecycle — create, read, update, delete, and search — making it possible to sync knowledge bases with external systems, trigger content updates from CI/CD pipelines, and build custom tooling on top of team documentation.
 
-## API
+**Areas:** Knowledge Management · Team Workspace · Documentation · Wiki · Collaboration · Project Management · REST API
 
-The Nuclino REST API (public preview launched January 2022) allows developers to build integrations and automate content workflows. All API interactions use JSON over HTTPS, and content is authored and returned in Markdown.
+## Nuclino on APIs.io
 
-- **Base URL:** `https://api.nuclino.com/v0`
-- **Auth:** Bearer token API key in the `Authorization` header
-- **Docs:** https://help.nuclino.com/d3a29686-api
+Everything profiled for Nuclino is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nuclino/](https://apis.io/providers/nuclino/)** — or go straight to one of the APIs or properties below.
 
-### Resources
+### APIs (6)
 
-| Resource | Description |
+- [Nuclino Collections API](https://apis.io/apis/nuclino/nuclino-collections-api/) — Groups/folders of items
+- [Nuclino Files API](https://apis.io/apis/nuclino/nuclino-files-api/) — File management
+- [Nuclino Items API](https://apis.io/apis/nuclino/nuclino-items-api/) — Wiki pages and documents
+- [Nuclino Teams API](https://apis.io/apis/nuclino/nuclino-teams-api/) — Team management
+- [Nuclino Users API](https://apis.io/apis/nuclino/nuclino-users-api/) — User management
+- [Nuclino Workspaces API](https://apis.io/apis/nuclino/nuclino-workspaces-api/) — Workspace management
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Nuclino Agentic Access](https://apis.io/agentic-access/nuclino/nuclino-agentic-access/)
+
+#### JSON Schema (4)
+
+The data models the API reads and writes.
+
+- [Nuclino Item](https://apis.io/schemas/nuclino/item/)
+- [Nuclino Team](https://apis.io/schemas/nuclino/team/)
+- [Nuclino User](https://apis.io/schemas/nuclino/user/)
+- [Nuclino Workspace](https://apis.io/schemas/nuclino/workspace/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Nuclino Context](https://apis.io/jsonld/nuclino/nuclino-context/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Create Item](https://apis.io/examples/nuclino/create-item/)
+- [List Workspaces](https://apis.io/examples/nuclino/list-workspaces/)
+- [Search Items](https://apis.io/examples/nuclino/search-items/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [Nuclino Collections API](https://apis.io/collections/nuclino/open-nuclino-collections-api/)
+- [Nuclino Collections Files API](https://apis.io/collections/nuclino/open-nuclino-files-api/)
+- [Nuclino Collections Items API](https://apis.io/collections/nuclino/open-nuclino-items-api/)
+- [Nuclino Collections Teams API](https://apis.io/collections/nuclino/open-nuclino-teams-api/)
+- [Nuclino Collections Users API](https://apis.io/collections/nuclino/open-nuclino-users-api/)
+- [Nuclino Collections Workspaces API](https://apis.io/collections/nuclino/open-nuclino-workspaces-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Nuclino — jsonschema rules](https://apis.io/rules/nuclino/nuclino-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nuclino Authentication](https://apis.io/security/nuclino/nuclino-authentication/)
+- [Nuclino Domain Security](https://apis.io/security/nuclino/nuclino-domain-security/)
+- [Nuclino Trust Center](https://apis.io/security/nuclino/nuclino-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Nuclino Plans Pricing](https://apis.io/plans/nuclino/nuclino-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nuclino Rate Limits](https://apis.io/rate-limits/nuclino/nuclino-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Nuclino Finops](https://apis.io/finops/nuclino/nuclino-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.nuclino.com/)
+- [Documentation](https://help.nuclino.com/d3a29686-api)
+- [Pricing](https://www.nuclino.com/pricing)
+- [Blog](https://www.nuclino.com/articles)
+
+## API Evangelist rating
+
+**Kin Score 36.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| Items | Wiki pages with Markdown content — create, read, update, delete, search |
-| Collections | Groups of items (page lists) — full CRUD |
-| Workspaces | Top-level organizational units |
-| Teams | Groups of workspace members (paid plans) |
-| Users | User identity and membership information |
-| Fields | Metadata schema for workspace items |
-| Files | File attachments associated with items |
+| Discoverability | 66.1 |
+| Contract quality | 63.6 |
+| Contract governance | 9.8 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 32.9 |
 
-### Key Endpoints
+**Agent readiness 24.8** — agent-aware
 
-```
-GET    /v0/items                    List items in a workspace or team
-POST   /v0/items                    Create an item or collection
-GET    /v0/items/:id                Get a single item or collection
-PUT    /v0/items/:id                Update title or content
-DELETE /v0/items/:id                Delete (move to trash)
-GET    /v0/items?search=...         Full-text search
-GET    /v0/workspaces/:id           Get workspace details
-GET    /v0/workspaces/:id/users     List workspace members
-GET    /v0/users/:id                Get user details
-```
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-## Rate Limits
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
 
-- 150 requests per minute per API key
-- HTTP 429 returned when exceeded
-- Response headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, `Retry-After`
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nuclino/](https://apis.io/providers/nuclino/).
 
-## Pricing
+## How this profile is made
 
-| Plan | Price | Key Limits |
-|---|---|---|
-| Free | $0 | 50 items, 2 GB storage |
-| Starter | $6/user/month | Unlimited items, 10 GB/user, 30-day history |
-| Business | $10/user/month | Starter + AI, audit log, team insights |
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-25% discount on annual billing. API access is included on all plans.
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nuclino: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-## Links
+## Open an issue
 
-- Website: https://www.nuclino.com
-- API Docs: https://help.nuclino.com/d3a29686-api
-- Blog: https://blog.nuclino.com
-- Pricing: https://www.nuclino.com/pricing
-- API Keys: https://help.nuclino.com/04598850-manage-api-keys
-- MCP Integration: https://help.nuclino.com/70af7f4f-connect-nuclino-to-ai-assistants-with-mcp
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nuclino/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
